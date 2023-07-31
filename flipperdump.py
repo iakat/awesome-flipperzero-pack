@@ -207,11 +207,16 @@ class Main:
                 self.TMPDIR / (package + ".zip"),
                 new_name,
             )
+            # we want a file tree that shows
+            # the full size but not
+            # the individual file lines.
             file_tree = subprocess.run(
                 [
                     "tree",
                     "-h",
                     "--du",
+                    "-L",
+                    "3",
                     self.TMPDIR / package,
                 ],
                 capture_output=True,
