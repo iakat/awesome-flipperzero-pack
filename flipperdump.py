@@ -39,6 +39,7 @@ class Main:
                 "off-device-debugging",
                 "notes-references",
             ],
+            "microsd-wavplayer": [],
         }
 
     def _urlify(self, string):
@@ -160,7 +161,24 @@ class Main:
                         items.append((package, category, item))
 
         await asyncio.gather(*[self._safe_download(*item) for item in items])
-
+        # move $(find . -type d -name Wav_Player)
+        # to microsd-wavplayer
+        dir_wavplayer = subprocess.run(
+            [
+                "find",
+                self.TMPDIR / "microsd",
+                "-type",
+                "d",
+                "-name",
+                "Wav_Player",
+            ],
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        os.rename(
+            dir_wavplayer,
+            self.TMPDIR / "microsd-wavplayer",
+        )
         # zip every package
         tasks = []
         for package in self.PACKAGES.keys():
@@ -169,7 +187,7 @@ class Main:
                 self._exec_wait(
                     "zip",
                     "-r",
-                    "-0",
+                    "-2",
                     package + ".zip",
                     package,
                     cwd=self.TMPDIR,
@@ -194,8 +212,6 @@ class Main:
                     "tree",
                     "-h",
                     "--du",
-                    "-L",
-                    "3",
                     self.TMPDIR / package,
                 ],
                 capture_output=True,
@@ -230,6 +246,13 @@ class Main:
                 "\n```\n",
                 open(self.TMPDIR / "tweaks" / "files.txt").read(),
                 "\n```\n",
+                "\n## microsd-wavplayer",
+                "\npart of [uberguidoz/flipper](https://github.com/UberGuidoZ/Flipper), but very big, so it's in a separate zip file",
+                "\n### files",
+                "\n```\n",
+                open(self.TMPDIR / "microsd-wavplayer" / "files.txt").read(),
+                "\n```\n",
+
             ]
         )
         # write body.txt to tmpdir/body.txt
