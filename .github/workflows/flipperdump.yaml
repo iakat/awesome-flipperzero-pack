@@ -1,0 +1,43 @@
+# Flipperdump gets all resources for a flipper zero,
+# from https://github.com/djsime1/awesome-flipperzero
+# and downloads them to create a zip file with all the resources
+# for easy installation on the SD card.
+# The zip file is then uploaded to the releases page of this repo.
+
+on:
+  schedule:
+  # Every day
+  - cron: '34 2 * * *'
+  # But also on push
+  push:
+    branches:
+    - main
+
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Flipperdump
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -ex
+        export OUTDIR=$(mktemp -d)
+
+        sudo apt-get update
+        sudo apt-get install -y unzip git curl wget ca-certificates perl sed git bash p7zip zip tree python3-pip python3-dev
+
+        pip install --no-cache-dir -r requirements.txt
+        python3 flipperdump.py
+
+        wget -qO- https://github.com/c4milo/github-release/releases/download/v1.1.0/github-release_v1.1.0_linux_amd64.tar.gz | tar zxvf -
+        mv github-release /usr/local/bin/github-release
+        chmod +x /usr/local/bin/github-release
+        # get the version from the filename
+        # - awesome-flipperzero-pack-{self.VERSION}-microsd.zip
+        export VERSION=$(ls files/awesome-flipperzero-pack-*-microsd.zip | sed -e 's/.*-\(.*\)-.*/\1/'| head -n 1)
+
+        # create the release
+        github-release katlol/awesome-flipperzero-pack "$VERSION" main "$(cat files/body.md)" "files/awesome-flipperzero-pack-*.zip"
