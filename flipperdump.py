@@ -247,12 +247,9 @@ class Main:
                 open(self.TMPDIR / "tweaks" / "files.txt").read(),
                 "\n```\n",
                 "\n## microsd-wavplayer",
-                "\npart of [uberguidoz/flipper](https://github.com/UberGuidoZ/Flipper), but very big, so it's in a separate zip file",
+                "\npart of [UberGuidoZ/Flipper](https://github.com/UberGuidoZ/Flipper), but very big, so it's in a separate zip file",
                 "\n### files",
-                "\n```\n",
-                open(self.TMPDIR / "microsd-wavplayer" / "files.txt").read(),
-                "\n```\n",
-
+                "\nSee <https://github.com/UberGuidoZ/Flipper/tree/main/Wav_Player>",
             ]
         )
         # write body.txt to tmpdir/body.txt
