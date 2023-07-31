@@ -230,9 +230,10 @@ class Main:
             [
                 f"# awesome-flipperzero-pack {self.VERSION}\n",
                 "awesome-flipperzero-pack is a downloadable toolkit of [the awesome-flipperzero resources](https://github.com/djsime1/awesome-flipperzero).",
-                "Two zip files are available:",
-                f"- awesome-flipperzero-pack-{self.VERSION}-microsd.zip: for the microsd card (firmwares, databases, plugins, animations)",
-                f"- awesome-flipperzero-pack-{self.VERSION}-tweaks.zip: for the tweaks (firmwares, modules, cases, notes)",
+                "These zip files are available:",
+                f"1. awesome-flipperzero-pack-{self.VERSION}-microsd.zip: for the microsd card (firmwares, databases, plugins, animations)",
+                f"2. awesome-flipperzero-pack-{self.VERSION}-tweaks.zip: for the tweaks (firmwares, modules, cases, notes)",
+                f"3. awesome-flipperzero-pack-{self.VERSION}-microsd-wavplayer.zip: for the microsd card (wavplayer, part of [UberGuidoZ/Flipper](https://github.com/UberGuidoZ/Flipper))",
                 "\n## microsd",
                 "\n### downloaded",
                 open(self.TMPDIR / "microsd" / "downloaded.md").read(),
