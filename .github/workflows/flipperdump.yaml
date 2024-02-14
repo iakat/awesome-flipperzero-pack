@@ -41,3 +41,8 @@ jobs:
 
         # create the release
         github-release katlol/awesome-flipperzero-pack "$VERSION" main "$(cat files/body.md)" "files/awesome-flipperzero-pack-*.zip"
+    - uses: dev-drprasad/delete-older-releases@v0.3.2
+      with:
+        keep_latest: 7
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
