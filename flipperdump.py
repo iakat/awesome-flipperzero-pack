@@ -186,8 +186,10 @@ class Main:
             tasks.append(
                 self._exec_wait(
                     "zip",
+                    "-9",
+                    "-y",
                     "-r",
-                    "-2",
+                    "-q",
                     package + ".zip",
                     package,
                     cwd=self.TMPDIR,
